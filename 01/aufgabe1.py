@@ -1,7 +1,10 @@
-##
+####
+# This program aims to crack a substitue cipher
+####
+
 import re 
 
-##
+## Variables and letter frequencies
 chiffre = ""
 encryptedChiffre = ""
 letterFrequency = {}
@@ -12,7 +15,8 @@ germanLetterFrequency = [0.174, 0.0978, 0.0755, 0.0727, 0.07, 0.0651, 0.0615,
 germanLetterFrequencyX = ["E", "N", "I", "S", "R", "A", "T", "D", "H", "U", "L", "C", "G", "M",
                              "O", "B", "W", "F", "K", "Z", "P", "V", "J", "Y", "X", "Q"]
 
-## Durch Ausprobieren herausfinden
+## You have to manually adjust the frequencies, you have found in the cipher - try and error
+## To decode another cipher, change the hardcoded frequencies below (those are from chiffrat.txt)
 fixedLetterFrequencyX = ["V", "Q", "O", "U", "N", "K", "M", "B", "C", "F", "W", "G", "E",
                             "T", "D", "X", "H", "I", "A", "J", "P", "R", "Z", "L", "Y", "S"]
 germanDict = dict(zip(germanLetterFrequencyX, germanLetterFrequency))
