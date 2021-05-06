@@ -3,44 +3,54 @@
 ####
 
 import numpy as np
+import pip._vendor.chardet as ch
 
 def Decrypt(ciphertext, key):
-    counter = 0
-    l = []
-    keyBytes = []
-    
-    for i in key.tolist():
-        keyBytes.append(i.to_bytes(1, "little", signed=True))
+    cipherLength = len(ciphertext)
+    keyLength = len(key)
+    counterFirstXOR = 0
+    de_cipher = []
+    tempList = []
 
+    for shift in range(0, 2000000):
 
-    a = (keyBytes[0])
-    b = (ciphertext[0].to_bytes(1, byteorder="little"))
-    print((keyBytes[0]))
-    print("test", ciphertext[0])
-    print((ciphertext[0].to_bytes(1, byteorder="little")))
+        strList = ""
+        currentXOR = None  
+        firstXOR = ciphertext[0] ^ key[counterFirstXOR]
 
-    bytesCipherText = []
-    for number in ciphertext:
-        bytesCipherText.append(number.to_bytes(1, byteorder="little"))
+        if ((firstXOR < 32) or (firstXOR > 128)): 
+            counterFirstXOR += 1
+            continue
+        
+        for n in range(0,cipherLength):
+            if(n+counterFirstXOR < keyLength):
+                currentXOR = ciphertext[n]^key[n+counterFirstXOR]
+            if((currentXOR < 32) or (currentXOR > 128)):
+                break
+            de_cipher.append(currentXOR)
+        
+        for x in de_cipher:
+            tempList.append(chr(x))
+        strList = "".join(tempList)
+        
+        if(len(strList) > 100):
+            print("......cracking......")
+            print("KeyPosition: ", counterFirstXOR)
+            print("Plaintext found: ", strList)
+            print() 
 
-    print(bytesCipherText)
-    #result = bytearray(bytesCipherText)
-    #for counter, key in enumerate(keyBytes):
-     #   bytesCipherText[counter] ^= key
-
-    # for i in ciphertext:
-    #     l.append(i.to_bytes(1, "little") ^ keyList[counter])    ## XOR operation
-    #     counter += 1
-
-    return 
+        counterFirstXOR += 1
+        tempList.clear()
+        de_cipher.clear()
+        strList = ""
+        
+    return  
 
 def Main():
-    c = open("data/chiffratbin.sec", "rb").read()
-    k = np.fromfile("data/random.dat", dtype="byte")
-    #print(type(c))
-    #print(k)
-    #print(Decrypt(c, k))
-    Decrypt(c, k)
+    c = open("data/chiffrat.bin", "rb").read()
+    k = open("data/random.dat", "rb").read()
+
+    print(Decrypt(c, k))
 
 if __name__ == "__main__":
     Main()
