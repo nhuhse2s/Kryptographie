@@ -6,13 +6,15 @@ import numpy as np
 import pip._vendor.chardet as ch
 
 def Decrypt(ciphertext, key):
+    assert(len(ciphertext) < len(key))
+
     cipherLength = len(ciphertext)
     keyLength = len(key)
     counterFirstXOR = 0
     de_cipher = []
     tempList = []
 
-    for shift in range(0, 2000000):
+    for shift in range(0, keyLength):
 
         strList = ""
         currentXOR = None  
@@ -33,11 +35,11 @@ def Decrypt(ciphertext, key):
             tempList.append(chr(x))
         strList = "".join(tempList)
         
-        if(len(strList) > 100):
-            print("......cracking......")
+        if(len(strList) > 200):
+            print("......cracking......\n")
             print("KeyPosition: ", counterFirstXOR)
-            print("Plaintext found: ", strList)
-            print() 
+            print("Plaintext found: ", strList, "\n")
+
 
         counterFirstXOR += 1
         tempList.clear()
