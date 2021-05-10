@@ -14,7 +14,7 @@ def Decrypt(message01, message02, message03):
     m1_xor_m3 = []
     m2_xor_m3 = []
 
-    guessedWord = "China" # Corona, Deutschland, Bericht, Wetter, Sonne, RKI, Russland, USA, Biden
+    guessedWord = "corona" # Corona, Deutschland, Bericht, Wetter, Sonne, RKI, Russland, USA, Biden
     guessedWord_int = []
     
     for n in range(0, messageLength):
@@ -35,7 +35,7 @@ def Decrypt(message01, message02, message03):
     de_cipher = []
     tempList = []
 
-    for shift in range(0, messageLength):
+    for shift in range(0, len(guessedWord_int)):
 
         strList = ""
         currentXOR = None
@@ -74,7 +74,6 @@ def Decrypt(message01, message02, message03):
     print("int_word: ", guessedWord_int)
     print()
     
-
     return
 
 def Main():
