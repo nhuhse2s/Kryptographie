@@ -35,7 +35,7 @@ def Decrypt(ciphertext, key):
             tempList.append(chr(x))
         strList = "".join(tempList)
         
-        if(len(strList) > 200):
+        if(len(strList) > 20):
             print("......cracking......\n")
             print("KeyPosition: ", counterFirstXOR)
             print("Plaintext found: ", strList, "\n")
@@ -51,8 +51,10 @@ def Decrypt(ciphertext, key):
 def Main():
     c = open("data/chiffrat.bin", "rb").read()
     k = open("data/random.dat", "rb").read()
-
+    
     print(Decrypt(c, k))
+    #print(type(c))
+    #print(type(k))
 
 if __name__ == "__main__":
     Main()
