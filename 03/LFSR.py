@@ -39,5 +39,6 @@ def Main():
 
     if(my_solution == solution):
         print("success")
+        
 if __name__ == "__main__":
     Main()
