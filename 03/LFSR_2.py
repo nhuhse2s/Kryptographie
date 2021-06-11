@@ -20,7 +20,7 @@ def Init():
                 flops_next_state[i-1] = flops_current_state[i]
             if((i-1) == -1):
                 flops_next_state[20] = flops_current_state[0]^flops_current_state[19]
-                #flops_next_state[20] = flops_current_state[0]^flops_current_state[2]         
+                #flops_next_state[20] = flops_current_state[0]^flops_current_state[2]     ## Das sollte das korrekte Polynom    
         
         out_array.append(flops_current_state[0])
         flops_current_state = flops_next_state.copy()
@@ -29,7 +29,7 @@ def Init():
 
 def Main():
     result, internal = Init()
-    #print(result)
+    print(result)
     #if(internal == [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] or [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]):
     #    print("found")
     print(internal)
