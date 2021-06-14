@@ -18,7 +18,7 @@ def RSA_a():
         print("x: ", x, "| time: ", end - start, " Sekunden")
 
 def RSA_b():
-    prime_length = 3000
+    prime_length = 1024
     ggt          = 0
     prime_p      = number.getPrime(prime_length)    
     prime_q      = number.getPrime(prime_length)
@@ -58,12 +58,18 @@ def ModInv(e, phi):
         (r_old, r_new) = (r_new, r_old - a * r_new)
     return d_old % phi if r_old == 1 else None
 
-def GGT(a, b):
-    while b!=0:
-        c=a%b
-        a=b
-        b=c
-    return a
+def ChinesischerRestsatz(p, q, n, e, d, x):
+    x_p = x % p
+    x_q = x % q
+    d_p = d % (p-1)
+    d_q = d % (q-1)
+    y_p = (x_p**d_p) % p
+    y_q = (x_q**d_q) % q
+    c_p = pow(q, -1) % p
+    c_q = pow(p, -1) % q
+    y   = (q * c_p * y_p + p * c_q * y_q) % n
+    
+    return n
 
 if __name__ == "__main__":
 
@@ -76,8 +82,8 @@ if __name__ == "__main__":
     # print("n: ", n)
     # print("e: ", e)
     # print("d: ", d)
-    
-    message = b'helloworld'
+
+    message = b'30'
     print("----building keys------")
     public_key = RSA.construct((n, e))
     private_key = RSA.construct((n, d))
@@ -96,6 +102,9 @@ if __name__ == "__main__":
     m_decrypted = decryptor.decrypt(m_encrypted)
     print("Decrypted message: ", m_decrypted)
     print("-----------------------")
+
+    print("Restsatz: ")
+    print(ChinesischerRestsatz(p, q, n, e, d, 30))
 
     # m_encrypted = RSA_encrypt(message, e, n)
     # print("Message: ", message)
